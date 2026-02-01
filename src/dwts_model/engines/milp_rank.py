@@ -13,8 +13,6 @@
   Judge Save：E 只需处于组合排名 bottom-two（而非必然最差）
   其中 R_i = r_i^judge + r_i^fan
 """
-import numpy as np
-from scipy.optimize import milp, LinearConstraint, Bounds
 from typing import Dict, List, Tuple, Optional, Set
 import time
 from dataclasses import dataclass
@@ -255,7 +253,6 @@ class MILPRankEngine(InversionEngine):
         problem: RankProblem,
     ) -> Tuple[Dict[str, int], float]:
         """回退：返回均匀排名"""
-        n = problem.get_n_contestants()
         fan_ranks = {c: i + 1 for i, c in enumerate(problem.contestants)}
         return fan_ranks, 1.0
 

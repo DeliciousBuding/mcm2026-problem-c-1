@@ -9,9 +9,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch, Polygon
-import numpy as np
 from pathlib import Path
-import shutil
 
 # 严格蓝灰配色
 PALETTE = {
@@ -347,7 +345,6 @@ def generate_show_flowchart():
     ac = PALETTE["arrow_gray"]
     lw_main = 2.2
     lw_secondary = 2.0
-    lw_annot = 1.2
 
     draw_arrow(ax, box_anchor(weekly_box, "bottom"), box_anchor(judges_box, "top"), ac, lw=lw_main)
     draw_arrow(ax, box_anchor(weekly_box, "bottom"), box_anchor(fans_box, "top"), ac, lw=lw_main)

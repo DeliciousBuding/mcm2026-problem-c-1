@@ -18,8 +18,8 @@
 阶段 2 目标：min/max v_i 且 sum(|s_j|) <= S* + delta
 """
 import numpy as np
-from scipy.optimize import linprog, OptimizeResult
-from typing import Dict, List, Tuple, Optional, Set
+from scipy.optimize import linprog
+from typing import Dict, List, Tuple, Optional
 import time
 from dataclasses import dataclass
 

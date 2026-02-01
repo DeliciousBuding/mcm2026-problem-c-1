@@ -14,7 +14,6 @@ DWTS 论文统一配色方案 (v1.0)
 - 红 (#D55E00)：警示信息（淘汰/mismatch/异常点/违反约束）
 """
 
-import matplotlib as mpl
 from typing import Optional
 
 # ============================================================

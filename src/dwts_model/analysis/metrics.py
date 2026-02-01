@@ -1,7 +1,7 @@
 ﻿"""
 评估指标：肯德尔相关、逆转率、孔多塞一致性。
 """
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import numpy as np
 

@@ -8,9 +8,8 @@
 4) 异常检测
 """
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 import re
-import warnings
 
 import numpy as np
 import pandas as pd

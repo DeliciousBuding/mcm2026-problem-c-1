@@ -15,14 +15,14 @@ DWTS 图表模板模块 (v1.0)
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-from typing import Optional, List, Tuple, Union
+from typing import List, Tuple, Union
 from pathlib import Path
 
 from .paper_palette import (
     PALETTE, FIGURE_STANDARDS, 
     get_paper_rcparams, apply_paper_style,
-    LINE_STYLES, BAR_STYLES, FILL_STYLES, MARKER_STYLES,
-    add_confidence_band, add_recommended_point, add_highlight_zone,
+    LINE_STYLES, MARKER_STYLES,
+    add_confidence_band, add_recommended_point,
 )
 
 
@@ -705,9 +705,6 @@ def create_forest_plot(
     
     # 参考线
     ax.axvline(reference_line, color=PALETTE["neutral"], linestyle="--", linewidth=1.0, alpha=0.7)
-    
-    # 误差线
-    xerr = np.array([effects - lower_ci, upper_ci - effects])
     
     # 颜色（显著用橙色）
     if significant is None:

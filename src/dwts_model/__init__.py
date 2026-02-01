@@ -12,13 +12,13 @@
 __version__ = "1.0.0"
 __author__ = "MCM Team 2026"
 
-# Visualization exports
+# Visualization exports (explicit re-exports)
 from .paper_palette import (
-    PALETTE,
-    FIGURE_STANDARDS,
-    get_paper_rcparams,
-    apply_paper_style,
-    get_season_color,
-    get_season_colors,
+    PALETTE as PALETTE,
+    FIGURE_STANDARDS as FIGURE_STANDARDS,
+    get_paper_rcparams as get_paper_rcparams,
+    apply_paper_style as apply_paper_style,
+    get_season_color as get_season_color,
+    get_season_colors as get_season_colors,
 )
 

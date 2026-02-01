@@ -25,7 +25,7 @@ def _构建特征表(loader) -> Tuple[pd.DataFrame, pd.Series]:
 
     # 计算每个选手的评委分统计
     score_stats = (
-        scores[scores["all_na"] == False]
+        scores[~scores["all_na"]]
         .groupby(["season", "contestant"])["total_score"]
         .agg(["mean", "std", "max", "min", "count"])
         .reset_index()

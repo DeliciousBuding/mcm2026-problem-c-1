@@ -27,7 +27,7 @@ jobs:
     - name: Lint with Ruff (non-blocking)
       run: |
         # 只检查代码目录，避免检查 data 中的非代码文件（如 notebook）导致解析错误
-        ruff check src scripts --exit-zero
+        ruff check src --exit-zero
 
     - name: Run Tests
       run: |

@@ -4,9 +4,9 @@
 维护所有赛季/周的活跃选手集合，用于约束生成与反演。
 """
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-import numpy as np
 import pandas as pd
 
 from .fsm import ContestantFSM, WeekType

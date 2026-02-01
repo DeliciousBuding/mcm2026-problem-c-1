@@ -519,13 +519,13 @@ def plot_sankey_audit(
     bar_height = 0.6
     
     # 堆叠条形图（低色彩 + 线型区分）
-    bars1 = ax.barh(y_pos, safe_vals, bar_height, label='Safe', 
-                    color=PALETTE["light_blue"], edgecolor=PALETTE["navy"], linewidth=1.2)
-    bars2 = ax.barh(y_pos, saved_vals, bar_height, left=safe_vals, label='Saved',
-                    color=PALETTE["light_blue"], edgecolor=PALETTE["deep_blue"], linewidth=1.2, hatch='//')
-    bars3 = ax.barh(y_pos, elim_vals, bar_height, 
-                    left=[s+v for s,v in zip(safe_vals, saved_vals)], label='Eliminated',
-                    color=PALETTE["light_blue"], edgecolor=PALETTE["deep_blue"], linewidth=1.6, hatch='xx')
+    ax.barh(y_pos, safe_vals, bar_height, label='Safe', 
+            color=PALETTE["light_blue"], edgecolor=PALETTE["navy"], linewidth=1.2)
+    ax.barh(y_pos, saved_vals, bar_height, left=safe_vals, label='Saved',
+            color=PALETTE["light_blue"], edgecolor=PALETTE["deep_blue"], linewidth=1.2, hatch='//')
+    ax.barh(y_pos, elim_vals, bar_height, 
+            left=[s+v for s,v in zip(safe_vals, saved_vals)], label='Eliminated',
+            color=PALETTE["light_blue"], edgecolor=PALETTE["deep_blue"], linewidth=1.6, hatch='xx')
     
     # 添加数值标签（为窄段落做错位）
     min_width = 28
@@ -656,7 +656,6 @@ def plot_ternary_tradeoff(matrix_df: pd.DataFrame, pareto_df: pd.DataFrame, fig_
     grid_levels = [0.2, 0.4, 0.6, 0.8]
     for level in grid_levels:
         # 平行于底边（fairness等值线）
-        p1 = _to_xy([1-level, level/2, level/2])
         p2 = _to_xy([1-level, level, 0])
         p3 = _to_xy([1-level, 0, level])
         ax.plot([p2[0], p3[0]], [p2[1], p3[1]], color=PALETTE["ref_gray"], linewidth=0.6, linestyle="--", alpha=0.6)
@@ -941,7 +940,7 @@ def plot_save_sensitivity(sensitivity_df: pd.DataFrame, fig_path: Path):
 def plot_democratic_deficit(deficit_df: pd.DataFrame, fig_path: Path):
     if deficit_df.empty:
         return
-    from dwts_model.paper_palette import FIGURE_STANDARDS, apply_paper_style
+    from dwts_model.paper_palette import apply_paper_style
     fig, ax = plt.subplots(figsize=(7.4, 4.1))
     x = deficit_df["season"].to_numpy()
     y = deficit_df["democratic_deficit"].to_numpy()
