@@ -8,9 +8,15 @@ venv/
 .venv/
 env/
 
-# Data (do NOT commit datasets)
-/data/
-*.csv
+# Data (精细化：忽略大型数据集 CSV，但允许特定子目录被提交)
+# 忽略 data 下所有 CSV 文件
+/data/**/*.csv
+# 若需保留某些共享数据子目录，请将其放在以下白名单目录（示例）
+!/data/shared/
+!/data/shared/**
+!/data/keep/
+!/data/keep/**
+
 
 # Outputs and build artifacts
 /outputs/
