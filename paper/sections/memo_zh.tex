@@ -1,0 +1,63 @@
+﻿% 备忘录（中文）
+
+\newpage
+\thispagestyle{empty}
+
+\begin{center}
+\Large\textbf{审计备忘录}
+\end{center}
+
+\vspace{0.5em}
+\noindent\rule{\textwidth}{1.5pt}
+\vspace{0.3em}
+
+\begin{tabular}{@{}ll}
+\textbf{收件人：} & 《与星共舞》执行制片人 \\
+\textbf{发件人：} & Team \#2617892 --- 建模与审计组 \\
+\textbf{日期：} & 2026 年 1 月 30 日 \\
+\textbf{主题：} & \textbf{规则审计与动态赛制建议}
+\end{tabular}
+
+\vspace{0.3em}
+\noindent\rule{\textwidth}{1.5pt}
+\vspace{0.8em}
+
+\subsection*{摘要}
+
+我们基于双核反演与贝叶斯后验重建，对 34 季淘汰结果进行审计。核心问题：\textbf{在不可观测粉丝票的情况下，规则是否足以解释淘汰结果？}
+
+\textbf{结论为“是”。} 所有赛季在规则约束下均可解释（$S^*=0$）。但规则可解释并不等于确定性——部分周次仍存在较宽的不确定区间。
+
+\subsection*{三项关键发现}
+
+\begin{enumerate}[itemsep=0.2em]
+    \item \textbf{规则透明度良好。} \newline
+    $S^*$ 全季为 0，说明公开规则足以解释结果。
+    
+    \item \textbf{结构性不确定性仍在。} \newline
+    以 Bobby Bones 为例，后验 HDI 最大宽度约 0.46，表明 50/50 机制存在弱识别区。
+    
+    \item \textbf{反事实稳定性。} \newline
+    Kendall 相关均值约 0.455、逆转率约 0.174。动态权重保持公平信号同时提升观众影响。
+\end{enumerate}
+
+\subsection*{建议：动态自适应权重}
+
+\begin{itemize}[itemsep=0.1em]
+    \item \textbf{前期（1--5 周）：} 评委权重更高（\(\alpha \approx 0.7\)）。
+    \item \textbf{后期：} 逐步向观众倾斜（\(\alpha \to 0.4\)）。
+    \item \textbf{静态备选：} 60/40 为稳健基线。
+\end{itemize}
+
+\subsection*{范围与限制}
+
+\begin{itemize}[itemsep=0.1em]
+    \item 粉丝票不可观测，只能给出后验区间。
+    \item 反事实评估假设粉丝行为不随规则改变。
+\end{itemize}
+
+\vspace{0.8em}
+\hfill\textbf{--- Team \#2617892 建模与审计组}
+
+\vspace{0.3em}
+\hfill\textit{详细方法见附录。}

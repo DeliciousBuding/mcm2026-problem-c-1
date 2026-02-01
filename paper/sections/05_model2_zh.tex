@@ -1,0 +1,36 @@
+﻿% Section 5: Model 2 (Chinese)
+
+\section{模型二：反事实赛制评估}
+\label{sec:model2_zh}
+
+\noindent\textbf{\textit{对应问题 2：}} 固定粉丝意愿与评委分数，替换规则权重，评估赛制公平性与稳定性。
+
+\subsection{评估指标}
+\begin{itemize}[itemsep=0.2em]
+    \item \textbf{技术公平}：机制分数与评委分数的 Kendall 相关。
+    \item \textbf{观众参与}：是否与粉丝最低票一致。
+    \item \textbf{稳定性}：淘汰分布的熵稳定度。
+    \item \textbf{民主赤字}：排名制相对百分制的反转概率。
+\end{itemize}
+
+\subsection{结果}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{figures/fig_q2_counterfactual_matrix.pdf}
+    \caption{\textbf{DAWS 基础规则在多指标下最接近平衡（高亮）。}}
+    \label{fig:cf_matrix_zh}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\textwidth]{figures/fig_q2_save_sensitivity.pdf}
+    \caption{\textbf{民主赤字随 Judge Save 软度变化。} 阴影带为 S28+ 参考区间。}
+    \label{fig:save_sensitivity_zh}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{figures/fig_q2_democratic_deficit.pdf}
+    \caption{\textbf{S28 规则切换后赤字走势被重新分段（阴影）。} 排名制的信息损失。}
+    \label{fig:deficit_zh}
+\end{figure}

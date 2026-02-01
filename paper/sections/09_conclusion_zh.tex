@@ -1,0 +1,33 @@
+﻿% 结论（中文）
+
+\section{结论}
+\label{sec:conclusion_zh}
+
+\subsection{主要结论}
+\begin{enumerate}[itemsep=0.2em]
+    \item \textbf{双核反演 + MaxEnt/Bayesian：} LP/MILP 提供可行区间，Hit-and-Run + 随机游走先验输出后验均值与 HDI。
+    \item \textbf{Assumption--Data Tension：} $S^*$ 与可行质量标记弱识别周次。
+    \item \textbf{反事实评估：} 技术公平、观众参与、稳定性与民主赤字量化赛制差异。
+    \item \textbf{特征归因：} forward-chaining 的 XGBoost + SHAP（Cox 互证）揭示关键驱动因素。
+    \item \textbf{机制设计：} DAWS 在公平、参与与稳定性之间取得平衡。
+\end{enumerate}
+
+\subsection{建议}
+\begin{enumerate}[itemsep=0.2em]
+    \item \textbf{赛前审计：} 赛前运行反演与后验分析，定位高不确定周次。
+    \item \textbf{DAWS 权重：} 不确定性调节的动态权重并保持平滑。
+    \item \textbf{评委拯救透明化：} 公布判断准则以降低争议。
+\end{enumerate}
+
+\subsection{局限性}
+\begin{itemize}[itemsep=0.1em]
+    \item 未建模外部舆情冲击。
+    \item 排名制赛季仍存在弱识别问题。
+    \item 反事实假设粉丝行为不随规则变化。
+\end{itemize}
+
+\subsection{未来工作}
+引入外部人气先验、自适应 MCMC，并构建实时审计面板。
+
+\vspace{0.5em}
+\noindent\textbf{结论要点：} 规则一致的贝叶斯重建可提供可解释、公平的审计结果，并支持动态赛制设计。
