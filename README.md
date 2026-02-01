@@ -20,6 +20,41 @@
 
 ---
 
+## 📌 项目当前状态与变更记录
+
+以下为本仓库在最近一次重构与修复流程中的重要变更与当前状态，便于团队成员快速了解并复现：
+
+- **README 链接更新**：已将论文链接从旧路径更新为 `paper/main.tex` 与 `paper/main_zh.tex`，并在文档中移除已废弃的 `archive/` 节点，指向 `Archive/C1_Legacy/` 存放历史文件。
+- **Archive 迁移**：历史版本与过时脚本已从项目根的 `archive/` 整理并迁移至外部归档位置 `Archive/C1_Legacy/`（项目树中已删除冗余副本）。
+- **中文章节恢复**：从归档中恢复了中文章节文件到 `paper/sections/*_zh.tex` 与附录 `paper/appendices/*_zh.tex`，用于编译中文论文。
+- **论文编译产物**：已在 `paper/` 目录生成并保存双语 PDF：`paper/main.pdf`（英文）与 `paper/main_zh.pdf`（中文）。编译使用 `xelatex` + `biber` 完成，存在若干字体警告（非阻断）。
+- **.gitignore**：新增并精细化 `.gitignore`，默认忽略大型数据文件（`data/**/*.csv`）与 `outputs/`、虚拟环境和 LaTeX 临时文件；同时允许将共享数据放入白名单目录如 `data/shared/` 或 `data/keep/` 并提交。
+- **提交信息模板**：新增 `docs/COMMIT_MESSAGE_TEMPLATE.md`，包含中文提交信息模板与示例，建议团队配置为 `git commit` 模板以统一提交风格。
+- **已完成提交（摘要）**：本次会话已分步提交关键更改（示例提交信息）：
+    - `修复 README：更新论文链接并添加 Archive 目录说明`
+    - `移除 archive 目录：历史文件已迁移至 Archive/C1_Legacy/`
+    - `添加中文论文章节文件：从 Archive/C1_Legacy 恢复 *_zh.tex 文件`
+    - `编译双语论文 PDF：main.pdf（英文）+ main_zh.pdf（中文）`
+    - `添加 README: 开发者须知（每次完成任务请立即 commit/push）`
+    - `添加 README 顶部开发者提醒；新增 .gitignore（忽略 data/ 与 outputs/）`
+    - `精细化 .gitignore；添加 docs/COMMIT_MESSAGE_TEMPLATE.md`
+
+建议团队成员在拉取最新代码后：
+
+1. 检查 `paper/` 下的 PDF 与章节文件是否满足本地编译需求（如需本地编译请确保已安装 TeX Live、`xelatex` 与 `biber`）。
+2. 如需在仓库中保留某个数据子目录，请将文件放入 `data/shared/` 或 `data/keep/`（或通知我更新 `.gitignore` 白名单）。
+3. 建议每位开发者在本地运行：
+
+```bash
+git pull origin main
+git config commit.template docs/COMMIT_MESSAGE_TEMPLATE.md
+```
+
+以便使用统一的提交模板。
+
+如需我将 `docs/COMMIT_MESSAGE_TEMPLATE.md` 同步为仓库根的 `.gitmessage.txt` 并全局配置（或为项目成员生成一份“提交范例”），我可以继续执行。
+
+
 ## 🎯 项目概述
 
 本项目是 **MCM/ICM 2026 竞赛问题 C** 的完整解决方案，研究对象是美国知名真人秀节目 **Dancing with the Stars (DWTS)**。我们开发了一套完整的数学建模框架，用于从有限的淘汰数据中推断观众投票分布，并设计更公平的评分机制。
