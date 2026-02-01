@@ -27,7 +27,11 @@
 %=== 宏包加载 ===
 
 % 字体与排版
-\usepackage{palatino}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{Latin Modern Mono}
 \usepackage{microtype}
 \setlength{\emergencystretch}{2em}
 
@@ -131,6 +135,9 @@
     citecolor=dwts-aux,
     urlcolor=dwts-proposed
 }
+
+% Ensure page anchors are numeric for packages like `lastpage`
+\renewcommand{\theHpage}{\arabic{page}}
 
 % 目录格式调整（紧凑行距）
 \usepackage{tocloft}

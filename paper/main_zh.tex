@@ -23,6 +23,11 @@
 
 % === Packages ===
 \usepackage{xeCJK}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{Latin Modern Mono}
 % Robust CJK font fallbacks to avoid missing-font build errors.
 \IfFontExistsTF{SimSun}{\setCJKmainfont{SimSun}}{%
   \IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}}{%
@@ -39,7 +44,6 @@
     \IfFontExistsTF{Noto Sans Mono CJK SC}{\setCJKmonofont{Noto Sans Mono CJK SC}}{%
       \setCJKmonofont{FandolFang-Regular}}}}
 
-\usepackage{palatino}
 \usepackage{microtype}
 \setlength{\emergencystretch}{2em}
 \usepackage{lastpage}
@@ -132,6 +136,7 @@
     citecolor=dwts-aux,
     urlcolor=dwts-proposed
 }
+\renewcommand{\theHpage}{\arabic{page}}
 \usepackage{tocloft}
 \setlength{\cftbeforesecskip}{2pt}
 \setlength{\cftbeforesubsecskip}{1pt}
