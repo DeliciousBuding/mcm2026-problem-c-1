@@ -1,0 +1,113 @@
+﻿% Section 4: Model 1 - Fan Vote Inversion (Dual-Core Engine)
+
+\section{Model 1: Fan Vote Inversion via Dual-Core Engine}
+\label{sec:model1}
+
+\noindent\textbf{\textit{This section addresses Tasks 1--2:}} We reconstruct feasible fan vote intervals from observed eliminations, then build a truncated Bayesian posterior that respects rule consistency and temporal smoothness.
+
+\subsection{Problem Formulation}
+\label{subsec:model1_formulation}
+
+Let $\mathcal{C}_{s,t} = \{1,2,\ldots,n\}$ denote the active contestants in season $s$, week $t$. We observe:
+\begin{itemize}[itemsep=0.2em]
+    \item Judge scores $\mathbf{J}$ or judge ranks $\mathbf{r}^{\text{judge}}$
+    \item Elimination outcome $E \in \mathcal{C}_{s,t}$
+    \item Rule type: percent seasons (S3--S27) vs. rank seasons (S1--S2, S28+)
+\end{itemize}
+
+We seek fan support shares $\mathbf{v}=(v_1,\ldots,v_n)$ subject to the simplex:
+\begin{equation}
+    \label{eq:vote_simplex}
+    \sum_{i=1}^{n} v_i = 1, \quad v_i \ge \epsilon \quad \forall i,
+\end{equation}
+where $\epsilon$ is a minimal share floor (1\%).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/fig_dwts_flowchart_vector.pdf}
+    \caption{\textbf{Uncertainty propagates through the dual-core engine into downstream audits.} LP core for percent seasons and MILP core for rank seasons; a rule-adaptive wrapper handles immunity, double eliminations, and judge save eras.}
+    \label{fig:dual_engine}
+\end{figure}
+
+\subsection{Percent Seasons: Linear Programming Core}
+\label{subsec:lp_core}
+
+For percent seasons, combined score is:
+\begin{equation}
+    C_{i,t} = \alpha Jpct_{i,t} + (1-\alpha) v_{i,t}, \quad Jpct_{i,t} = \frac{J_{i,t}}{\sum_k J_{k,t}}.
+\end{equation}
+The eliminated contestant has the lowest combined score:
+\begin{equation}
+    C_E \le C_i \quad \forall i \neq E.
+\end{equation}
+
+We solve a \textbf{robust LP} with slack variables $\mathbf{s}$ to tolerate rule ambiguity or data noise:
+\begin{equation}
+    \label{eq:robust_lp}
+    \boxed{\min_{\mathbf{v},\mathbf{s}} \sum_k s_k \;\; \text{s.t.} \; \eqnref{eq:vote_simplex},\; s_k\ge0,\; v_E-v_i \le \frac{J_i-J_E}{\sum_k J_k}+s_k}
+\end{equation}
+The optimal slack sum $S^*$ becomes an \textbf{Assumption--Data Tension} indicator.
+
+\subsection{Rank Seasons: MILP Core}
+\label{subsec:milp_core}
+
+For rank seasons, fan ranks are latent decision variables. Let $x_{ik}\in\{0,1\}$ indicate contestant $i$ has fan rank $k$:
+\begin{align}
+    \sum_{k=1}^{n} x_{ik} &= 1 \quad \forall i, \\
+    \sum_{i=1}^{n} x_{ik} &= 1 \quad \forall k, \\
+    r_i^{\text{fan}} &= \sum_{k=1}^{n} k\,x_{ik}.
+\end{align}
+The eliminated contestant must lie in the combined-rank bottom set; with Judge Save, $E$ only needs to be in the bottom-two.
+
+\subsection{Rule-Adaptive Constraints}
+\begin{table}[H]
+    \centering
+    \caption{Rule Changes Across DWTS Seasons}
+    \label{tab:rule_changes}
+    \begin{tabular}{llp{7cm}}
+        \toprule
+        \textbf{Seasons} & \textbf{Rule} & \textbf{Constraint Modification} \\
+        \midrule
+        S1--S2 & Rank-only & MILP core (\S\ref{subsec:milp_core}) \\
+        S3--S27 & Percent & LP core (\S\ref{subsec:lp_core}) \\
+        S28+ & Rank + Judge Save & MILP + bottom-two relaxation \\
+        Various & Double elim/Immunity & Adjust active set \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Assumption--Data Tension and Feasible Mass}
+\label{subsec:mismatch_detection}
+
+We define $S^*$ as the minimum slack needed for feasibility. Positive slack indicates \emph{Assumption--Data Tension} rather than manipulation. We also report the feasible-mass proxy (acceptance rate under uniform Dirichlet proposals), visualized as an uncertainty heatmap in \figref{fig:uncertainty_heatmap}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{figures/fig_q1_uncertainty_heatmap.pdf}
+    \caption{\textbf{Weak identification concentrates in a few weeks (circled).} Acceptance rate under uniform proposals; lower values indicate weaker identification. Circled cells are used for later case analysis.}
+    \label{fig:uncertainty_heatmap}
+\end{figure}
+
+\subsection{Truncated Bayesian Posterior Reconstruction}
+\label{subsec:mcmc}
+
+LP/MILP yields intervals $[L_i,U_i]$ that define a hyperrectangle on the simplex. We adopt a MaxEnt baseline (uniform over the feasible set) using Hit-and-Run, then apply a Gaussian random-walk prior across weeks:
+\begin{equation}
+    p(\mathbf{v}_t \mid \mathbf{v}_{t-1}) \propto \exp\left(-\frac{\lVert \mathbf{v}_t-\mathbf{v}_{t-1}\rVert^2}{2\sigma^2}\right).
+\end{equation}
+We use a warm-start trajectory (minimum-smoothness feasible path) and importance resampling to obtain posterior means and 95\% HDI bands. A representative HDI band is shown in \figref{fig:hdi_band}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\textwidth]{figures/fig_q1_hdi_band.pdf}
+    \caption{\textbf{Eliminations do not always align with minimum fan support.} Fan support shares $v_{i,t}$ with 95\% HDIs; red $\times$ mark eliminated weeks and thicker lines indicate eliminated contestants.}
+    \label{fig:hdi_band}
+\end{figure}
+
+
+\subsection{Summary}
+\begin{itemize}[itemsep=0.2em]
+    \item \textbf{Outputs:} feasible intervals $[v^{\min}_{i,t}, v^{\max}_{i,t}]$, posterior means, and 95\% HDIs.
+    \item \textbf{Identification:} acceptance rate and gap probability quantify uncertainty without circular ``100\% accuracy'' claims.
+    \item \textbf{Downstream Use:} posterior samples propagate uncertainty to counterfactual evaluation and mechanism design.
+\end{itemize}

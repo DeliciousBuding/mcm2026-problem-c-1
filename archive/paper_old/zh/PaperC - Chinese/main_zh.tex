@@ -1,0 +1,216 @@
+% MCM/ICM 2026 Chinese paper main file
+% !TEX program = xelatex
+% !BIB program = biber
+\documentclass{mcmthesis}
+
+% Hyperref chapter counter compatibility
+\newcounter{chapter}
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+\mcmsetup{
+    tcn = {2617892},
+    problem = {C},
+    sheet = true,
+    titleinsheet = true,
+    keywordsinsheet = true,
+    titlepage = false
+}
+
+% TOC toggle
+\makeatletter
+\@ifundefined{showtoctrue}{}{\showtoctrue}
+\makeatother
+
+% === Packages ===
+\usepackage{xeCJK}
+% Robust CJK font fallbacks to avoid missing-font build errors.
+\IfFontExistsTF{SimSun}{\setCJKmainfont{SimSun}}{%
+  \IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}}{%
+    \IfFontExistsTF{STSong}{\setCJKmainfont{STSong}}{%
+      \IfFontExistsTF{Noto Serif CJK SC}{\setCJKmainfont{Noto Serif CJK SC}}{%
+        \setCJKmainfont{FandolSong-Regular}}}}}
+\IfFontExistsTF{SimHei}{\setCJKsansfont{SimHei}}{%
+  \IfFontExistsTF{Microsoft YaHei}{\setCJKsansfont{Microsoft YaHei}}{%
+    \IfFontExistsTF{PingFang SC}{\setCJKsansfont{PingFang SC}}{%
+      \IfFontExistsTF{Noto Sans CJK SC}{\setCJKsansfont{Noto Sans CJK SC}}{%
+        \setCJKsansfont{FandolHei-Regular}}}}}
+\IfFontExistsTF{FangSong}{\setCJKmonofont{FangSong}}{%
+  \IfFontExistsTF{SimSun}{\setCJKmonofont{SimSun}}{%
+    \IfFontExistsTF{Noto Sans Mono CJK SC}{\setCJKmonofont{Noto Sans Mono CJK SC}}{%
+      \setCJKmonofont{FandolFang-Regular}}}}
+
+\usepackage{palatino}
+\usepackage{microtype}
+\setlength{\emergencystretch}{2em}
+\usepackage{lastpage}
+\usepackage{zref-abspage}
+\usepackage{float}
+\usepackage{geometry}
+\setlength{\headheight}{15pt}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage[ruled, vlined, linesnumbered]{algorithm2e}
+\SetAlgorithmName{Algorithm}{algorithm}{List of Algorithms}
+\SetKwInput{KwIn}{Input}
+\SetKwInput{KwOut}{Output}
+\SetKwInput{KwData}{Data}
+\SetKwInput{KwResult}{Result}
+\usepackage{listings}
+\lstset{
+    basicstyle=\small\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    tabsize=4
+}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning, calc}
+
+% =============================================================================
+% DWTS Paper Palette - 统一配色方案
+% =============================================================================
+\definecolor{dwts-proposed}{HTML}{2C4E5F}   % 青蓝 - 新机制/推荐
+\definecolor{dwts-baseline}{HTML}{0B2A3A}   % 藏蓝 - 基准/原机制
+
+\definecolor{dwts-warning}{HTML}{D35A3A}    % 深蓝 - 警示/不匹配
+
+\definecolor{dwts-warning2}{HTML}{A9B2BB}   % 灰蓝 - 次级警示
+\definecolor{dwts-fill}{HTML}{9CB8C8}       % 浅蓝 - 填充/区间
+\definecolor{dwts-accent}{HTML}{D35A3A}     % ?? - ????
+\definecolor{dwts-aux}{HTML}{2C4E5F}        % ?? - ??
+
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0pt, parsep=0pt}
+
+% 彩色框（用于重点内容）- 使用统一配色
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+% 预定义 tcolorbox 样式
+\newtcolorbox{proposedbox}[1][]{
+    colback=dwts-proposed!10!white,
+    colframe=dwts-proposed!80!black,
+    fonttitle=\bfseries,
+    #1
+}
+\newtcolorbox{warningbox}[1][]{
+    colback=dwts-warning!10!white,
+    colframe=dwts-warning!80!black,
+    fonttitle=\bfseries,
+    #1
+}
+\newtcolorbox{baselinebox}[1][]{
+    colback=dwts-baseline!5!white,
+    colframe=dwts-baseline!70!black,
+    fonttitle=\bfseries,
+    #1
+}
+\newtcolorbox{insightbox}[1][]{
+    colback=dwts-fill!30!white,
+    colframe=dwts-aux!80!black,
+    fonttitle=\bfseries,
+    #1
+}
+
+% 超链接（最后加载）- 使用统一配色
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=dwts-baseline,
+    citecolor=dwts-aux,
+    urlcolor=dwts-proposed
+}
+\usepackage{tocloft}
+\setlength{\cftbeforesecskip}{2pt}
+\setlength{\cftbeforesubsecskip}{1pt}
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{ref.bib}
+
+% === Custom commands ===
+\newcounter{mainpages}
+\makeatletter
+\newcommand{\savemainpages}{%
+    \immediate\write\@auxout{\string\setcounter{mainpages}{\the\value{page}}}%
+}
+\makeatother
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\eqnref}[1]{Eq.~(\ref{#1})}
+\newcommand{\algref}[1]{Algorithm~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+% === Meta ===
+\title{基于淘汰数据的观众投票反演：\\
+具备故障监测能力的双核反演框架\\
+及针对《与星共舞》的机制设计}
+\author{Team \#2617892}
+
+\begin{document}
+% Summary Sheet
+\pagenumbering{arabic}
+\setcounter{page}{0}
+\pagestyle{empty}
+\input{sections/00_abstract_zh.tex}
+\maketitle
+\thispagestyle{empty}
+
+% Memo
+\newpage
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Team \#2617892}
+\fancyhead[R]{\small 第\thepage 页，共\themainpages 页}
+\fancyfoot[C]{}
+\input{sections/memo_zh.tex}
+
+% Contents
+\newpage
+\renewcommand{\contentsname}{目录}
+\tableofcontents
+
+% Main
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Team \#2617892}
+\fancyhead[R]{\small 第\thepage 页，共\themainpages 页}
+\fancyfoot[C]{}
+\input{sections/01_intro_zh.tex}
+\input{sections/02_assumptions_zh.tex}
+\input{sections/03_notations_zh.tex}
+\input{sections/04_model1_zh.tex}
+\input{sections/05_model2_zh.tex}
+\input{sections/06_model3_zh.tex}
+\input{sections/07_sensitivity_zh.tex}
+\input{sections/08_evaluation_zh.tex}
+\input{sections/09_conclusion_zh.tex}
+
+% References
+\newpage
+\nocite{*}
+\printbibliography[heading=bibintoc, title={参考文献}]
+
+% Save main page count
+\savemainpages
+
+% Appendices
+\clearpage
+\appendix
+\pagenumbering{gobble}
+\pagestyle{plain}
+\newpage
+\input{appendices/ai_report_zh.tex}
+\end{document}
