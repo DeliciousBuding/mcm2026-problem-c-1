@@ -1,6 +1,37 @@
 # Python
 __pycache__/
 *.py[cod]
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Data (do NOT commit datasets)
+/data/
+*.csv
+
+# Outputs and build artifacts
+/outputs/
+/paper/*.xdv
+/paper/*.log
+/paper/*.aux
+/paper/*.bbl-SAVE-ERROR
+
+# LaTeX temporary files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+# Python
+__pycache__/
+*.py[cod]
 *$py.class
 *.so
 .Python
