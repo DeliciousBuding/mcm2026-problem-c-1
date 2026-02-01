@@ -23,6 +23,8 @@
 
 % === Packages ===
 \usepackage{xeCJK}
+% 如果目标字体缺少粗体/斜体，使用 xeCJK 的自动伪粗/伪斜设置
+\xeCJKsetup{AutoFakeBold=true, AutoFakeSlant=true}
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \setmainfont{TeX Gyre Pagella}
