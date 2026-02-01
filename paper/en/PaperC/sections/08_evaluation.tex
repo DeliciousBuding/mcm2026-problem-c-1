@@ -1,0 +1,24 @@
+﻿% Section 8: Model Evaluation
+
+\section{Model Evaluation}
+\label{sec:evaluation}
+
+We evaluate our framework via internal consistency checks, case studies, and computational efficiency.
+
+\subsection{Internal Consistency}
+\begin{itemize}[itemsep=0.1em]
+    \item \textbf{Posterior validity:} posterior means lie within LP/MILP feasibility bounds by construction.
+    \item \textbf{Predictive validity:} PPC Top-3 coverage and Brier score (non-circular) are summarized in \figref{fig:ppc_metrics}.
+    \item \textbf{Identification strength:} acceptance rate and gap probability indicate which weeks are weakly identified.
+\end{itemize}
+
+\subsection{Posterior Predictive Checks}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\textwidth]{figures/fig_q1_ppc_metrics.pdf}
+    \caption{\textbf{PPC metrics remain stable across seasons.} Top-3 coverage and Brier score by season.}
+    \label{fig:ppc_metrics}
+\end{figure}
+
+\subsection{Computational Efficiency}
+The end-to-end pipeline completes within a few minutes on a laptop for 3,000 MCMC samples per week. LP/MILP inversion remains sub-second per week, enabling pre-broadcast diagnostics.

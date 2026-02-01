@@ -1,0 +1,39 @@
+﻿% Section 5: Model 2 - Counterfactual Mechanism Evaluation
+
+\section{Model 2: Counterfactual Mechanism Evaluation}
+\label{sec:model2}
+
+\noindent\textbf{\textit{This section addresses Task 2:}} We keep inferred fan intent and judge scores fixed, then replay eliminations under alternative weighting rules to quantify fairness and stability.
+
+\subsection{Metrics}
+We evaluate each counterfactual rule using four complementary metrics:
+\begin{itemize}[itemsep=0.2em]
+    \item \textbf{Skill Alignment:} Kendall's $\tau$ between mechanism score and judge percentages.
+    \item \textbf{Viewer Agency:} frequency that the mechanism eliminates the same contestant as fan-minimum.
+    \item \textbf{Stability:} entropy-based consistency of eliminations across posterior samples.
+    \item \textbf{Democratic Deficit:} probability that rank-based rules overturn the percent-rule outcome.
+\end{itemize}
+
+\subsection{Results}
+\figref{fig:cf_matrix} summarizes the trade-offs across percent, rank, and rank+save systems. \figref{fig:save_sensitivity} shows robustness to alternative Judge Save behaviors, and \figref{fig:deficit} quantifies the information-theoretic democratic deficit of rank-only disclosure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{figures/fig_q2_counterfactual_matrix.pdf}
+    \caption{\textbf{DAWS base rule is closest to a balanced metric profile (highlighted).} Skill alignment, viewer agency, and stability for three systems.}
+    \label{fig:cf_matrix}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\textwidth]{figures/fig_q2_save_sensitivity.pdf}
+    \caption{\textbf{Democratic deficit shifts with judge-save softness.} Democratic deficit vs.\ save softness $\beta$; shaded band indicates the S28+ reference calibration.}
+    \label{fig:save_sensitivity}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{figures/fig_q2_democratic_deficit.pdf}
+    \caption{\textbf{The rule switch at S28 reframes the deficit trend (shaded).} Rank rules act as lossy compression of fan support.}
+    \label{fig:deficit}
+\end{figure}

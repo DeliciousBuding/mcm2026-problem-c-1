@@ -1,0 +1,37 @@
+﻿% Section 9: Conclusions and Recommendations
+
+\section{Conclusions}
+\label{sec:conclusion}
+
+\subsection{Summary of Findings}
+
+\begin{enumerate}[itemsep=0.2em]
+    \item \textbf{Dual-Core Inversion + Posterior Reconstruction:} LP/MILP yields feasible intervals; MaxEnt + Gaussian random-walk priors produce posterior means and HDIs.
+    \item \textbf{Assumption--Data Tension:} Slack $S^*$ and feasible-mass proxies identify weakly identified weeks without alleging manipulation.
+    \item \textbf{Counterfactual Evaluation:} We quantify skill alignment, viewer agency, stability, and the democratic deficit of rank-only disclosure.
+    \item \textbf{Feature Attribution:} Forward-chaining XGBoost + Cox with SHAP highlights judge performance and partner strength as dominant drivers.
+    \item \textbf{Mechanism Design:} DAWS provides a transparent, robust, and adaptive weighting schedule guided by a Pareto frontier.
+\end{enumerate}
+
+\subsection{Recommendations}
+
+\begin{enumerate}[itemsep=0.2em]
+    \item \textbf{Pre-Broadcast Transparency:} Run the inversion audit before broadcast to flag high-uncertainty weeks.
+    \item \textbf{Adopt DAWS:} Use uncertainty-aware dynamic weights with smoothness constraints.
+    \item \textbf{Judges' Save Clarity:} Publicly document save criteria to reduce perceived opacity.
+\end{enumerate}
+
+\subsection{Limitations}
+
+\begin{itemize}[itemsep=0.1em]
+    \item Unobserved shocks (media events, campaign effects) are not modeled.
+    \item Rank-only seasons remain weakly identified despite MILP constraints.
+    \item Counterfactuals assume fan behavior is invariant to rule changes.
+\end{itemize}
+
+\subsection{Future Work}
+
+Future extensions include external popularity priors, adaptive MCMC proposals, and real-time producer dashboards.
+
+\vspace{0.5em}
+\noindent\textbf{Key Takeaway:} A rule-consistent Bayesian reconstruction enables fair, explainable audits and motivates a dynamic mechanism that balances skill and popularity.
