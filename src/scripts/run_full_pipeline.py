@@ -1040,6 +1040,10 @@ def sync_paper_assets():
             if src.exists():
                 shutil.copy2(src, fig_dir / name)
 
+        # Ensure sections directory exists before copying summaries
+        sections_dir = paper_dir / "sections"
+        sections_dir.mkdir(parents=True, exist_ok=True)
+
         for summary_name in [
             "fan_vote_posterior_summary.csv",
             "counterfactual_matrix.csv",
@@ -1055,7 +1059,7 @@ def sync_paper_assets():
         ]:
             src = OUTPUT_DIR / summary_name
             if src.exists():
-                shutil.copy2(src, paper_dir / "sections" / summary_name)
+                shutil.copy2(src, sections_dir / summary_name)
 
 
 def compile_paper(paper_dir: Path, main_file: str):
